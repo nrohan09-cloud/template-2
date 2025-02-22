@@ -15,14 +15,6 @@ const nextConfig = {
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     domains: ['placehold.co', 'api.dicebear.com'],
   },
-  async rewrites() {
-    return [
-      {
-        source: "/api/:path*",
-        destination: "https://api.openai.com/:path*",
-      },
-    ];
-  },
 };
 
 export default nextConfig;
