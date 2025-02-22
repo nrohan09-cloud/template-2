@@ -166,12 +166,12 @@ export default function AdminPage() {
 
       {/* Desktop View */}
       <div className="hidden lg:block h-[calc(100vh-4rem)] overflow-hidden">
-        <div className="container mx-auto px-6 py-8 h-full">
+        <div className="h-full max-w-[1600px] mx-auto px-6 py-8">
           <h1 className="text-3xl font-semibold tracking-tight mb-8">{t('Admin Dashboard')}</h1>
 
-          <div className="grid grid-cols-12 gap-8 h-[calc(100%-5rem)]">
+          <div className="grid grid-cols-12 gap-6 h-[calc(100%-5rem)]">
             {/* Left Column: Employee Stats */}
-            <div className="col-span-3 overflow-auto">
+            <div className="col-span-4 overflow-auto">
               <h2 className="text-xl font-medium tracking-tight mb-4">{t('Employee Performance')}</h2>
               <div className="space-y-4 pr-2">
                 {dummyEmployees.map((employee) => (
@@ -181,7 +181,7 @@ export default function AdminPage() {
             </div>
 
             {/* Middle Column: Customer List */}
-            <div className="col-span-3 overflow-auto border-x px-6">
+            <div className="col-span-3 overflow-auto border-x px-4">
               <h2 className="text-xl font-medium tracking-tight mb-4">{t('Customers')}</h2>
               <CustomerList
                 customers={dummyCustomers}
@@ -191,7 +191,7 @@ export default function AdminPage() {
             </div>
 
             {/* Right Column: Customer Details */}
-            <div className="col-span-6 overflow-hidden">
+            <div className="col-span-5 overflow-hidden">
               {selectedCustomer ? (
                 <div className="h-full flex flex-col">
                   <div className="flex items-center gap-3 mb-6">
