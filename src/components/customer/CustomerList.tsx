@@ -1,10 +1,9 @@
 'use client';
 
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Card } from "@/components/ui/card";
 import { Customer } from '@/lib/types';
+import { formatDistanceToNow } from 'date-fns';
 
 interface CustomerListProps {
   customers: Customer[];
@@ -13,45 +12,45 @@ interface CustomerListProps {
 }
 
 export function CustomerList({ customers, onSelectCustomer, selectedCustomerId }: CustomerListProps) {
+  const getLastMessage = (customer: Customer) => {
+    return customer.messages[customer.messages.length - 1];
+  };
+
   return (
-    <Card className="w-full">
-      <CardHeader>
-        <CardTitle>Customers</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <ScrollArea className="h-[600px] pr-4">
-          <div className="space-y-2">
-            {customers.map((customer) => (
-              <div
-                key={customer.id}
-                className={`flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-colors ${
-                  selectedCustomerId === customer.id
-                    ? 'bg-primary/10'
-                    : 'hover:bg-muted'
-                }`}
-                onClick={() => onSelectCustomer(customer)}
-              >
-                <Avatar>
-                  <AvatarImage src={customer.avatar} />
-                  <AvatarFallback>{customer.name[0]}</AvatarFallback>
-                </Avatar>
-                <div className="flex-1 min-w-0">
-                  <div className="font-medium">{customer.name}</div>
-                  <div className="text-sm text-muted-foreground truncate">
-                    {customer.email}
-                  </div>
+    <div className="divide-y divide-border">
+      {customers.map((customer) => {
+        const lastMessage = getLastMessage(customer);
+        const messagePreview = lastMessage?.content || '';
+        const timestamp = lastMessage ? formatDistanceToNow(new Date(lastMessage.timestamp), { addSuffix: true }) : '';
+
+        return (
+          <button
+            key={customer.id}
+            onClick={() => onSelectCustomer(customer)}
+            className={`w-full text-left p-4 flex flex-col gap-1 hover:bg-accent/50 transition-colors relative ${
+              selectedCustomerId === customer.id ? 'bg-accent' : ''
+            }`}
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="h-10 w-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-lg font-semibold">
+                  {customer.name[0].toUpperCase()}
                 </div>
-                {/* Latest message preview */}
-                {customer.messages.length > 0 && (
-                  <div className="text-sm text-muted-foreground truncate max-w-[200px]">
-                    {customer.messages[customer.messages.length - 1].content}
-                  </div>
-                )}
+                <span className="font-semibold">{customer.name}</span>
               </div>
-            ))}
-          </div>
-        </ScrollArea>
-      </CardContent>
-    </Card>
+              <span className="text-sm text-muted-foreground">{timestamp}</span>
+            </div>
+            {messagePreview && (
+              <p className="text-sm text-muted-foreground line-clamp-1 pl-[52px]">
+                {messagePreview}
+              </p>
+            )}
+            {selectedCustomerId === customer.id && (
+              <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary rounded-r-full" />
+            )}
+          </button>
+        );
+      })}
+    </div>
   );
 } 

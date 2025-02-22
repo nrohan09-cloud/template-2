@@ -1,3 +1,5 @@
+export type MealType = 'breakfast' | 'lunch' | 'dinner' | 'snack';
+
 export interface Message {
   id: string;
   content: string;
@@ -8,7 +10,7 @@ export interface Message {
 export interface TimelineEntry {
   id: string;
   date: string;
-  mealType: 'breakfast' | 'lunch' | 'dinner' | 'snack';
+  mealType: MealType;
   foodImages: string[];
   cgmGraphImage: string;
   sugarLevel: number;
@@ -53,4 +55,11 @@ export interface AppState {
     type: 'customer' | 'employee' | 'admin';
     id: string;
   } | null;
+}
+
+// Utility type for API responses
+export interface ApiResponse<T> {
+  data?: T;
+  error?: string;
+  status: 'success' | 'error';
 } 

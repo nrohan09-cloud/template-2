@@ -5,12 +5,15 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Employee } from '@/lib/types';
+import { useTranslation } from '@/lib/contexts/LanguageContext';
 
 interface EmployeeStatsProps {
   employee: Employee;
 }
 
 export function EmployeeStats({ employee }: EmployeeStatsProps) {
+  const t = useTranslation;
+
   return (
     <Card className="w-full">
       <CardHeader className="flex flex-row items-center gap-4">
@@ -27,22 +30,22 @@ export function EmployeeStats({ employee }: EmployeeStatsProps) {
         {/* Statistics */}
         <div className="grid grid-cols-3 gap-4 mb-6">
           <div className="space-y-1">
-            <div className="text-sm text-muted-foreground">Total Chats</div>
+            <div className="text-sm text-muted-foreground">{t('Total Chats')}</div>
             <div className="text-2xl font-bold">{employee.stats.totalChats}</div>
           </div>
           <div className="space-y-1">
-            <div className="text-sm text-muted-foreground">Avg Response Time</div>
+            <div className="text-sm text-muted-foreground">{t('Avg. Response Time')}</div>
             <div className="text-2xl font-bold">{employee.stats.avgResponseTime}m</div>
           </div>
           <div className="space-y-1">
-            <div className="text-sm text-muted-foreground">Customers Helped</div>
+            <div className="text-sm text-muted-foreground">{t('Customers Helped')}</div>
             <div className="text-2xl font-bold">{employee.stats.customersHelped}</div>
           </div>
         </div>
 
         {/* Recent Actions */}
         <div>
-          <h3 className="text-sm font-medium mb-3">Recent Actions</h3>
+          <h3 className="text-sm font-medium mb-3">{t('Recent Actions')}</h3>
           <ScrollArea className="h-[300px]">
             <div className="space-y-3">
               {employee.actions.map((action) => (
